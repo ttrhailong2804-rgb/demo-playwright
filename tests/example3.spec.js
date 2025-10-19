@@ -51,10 +51,8 @@ test.describe('Header & Navigation', () => {
     await page.locator('input[name="q"]').fill('book');
     await expect(page.locator('input[name="q"]')).toHaveValue('book');
 
-    await page.getByRole('button', { name: 'Search'}).click();
+    await page.getByRole('button', { name: 'Search' }).click();
     await expect(page).toHaveURL('https://demowebshop.tricentis.com/search?q=book');
-
-    //vì sao các locator dạng role/label/placeholder không nhận ra ô search????
 
   });
   
@@ -64,5 +62,52 @@ test.describe('Header & Navigation', () => {
 
   });
 
+
+});
+
+test.describe('Login Function', () => {
+
+  test.beforeEach(async ({ page }) => {
+    await page.goto('https://demowebshop.tricentis.com/login');
+  });
+
+  test('Login features', async ({ page }) => {
+    await page.getByRole('button', { name: 'Register' }).click();
+    await expect(page).toHaveURL('https://demowebshop.tricentis.com/register');
+
+    await page.getByLabel('Male', {exact: true}).check();
+    await expect(page.getByLabel('Male', { exact: true })).toBeChecked();
+
+    await page.getByLabel('Female', { exact: true }).check();
+    await expect(page.getByLabel('Female', { exact: true})).toBeChecked();
+
+    await page.getByLabel('First name:').fill('John');
+    await expect(page.getByLabel('First name:')).toHaveValue('John');
+
+    await page.getByLabel('Last name:').fill('Wick');
+    await expect(page.getByLabel('Last name:')).toHaveValue('Wick');
+
+    await page.getByLabel('Email:').fill('johnmfwick@damn.com');
+    await expect(page.getByLabel('Email:')).toHaveValue('johnmfwick@damn.com');
+
+    await page.getByLabel('Password:', {exact: true}).fill('John123');
+    await expect(page.getByLabel('Password:', {exact: true})).toHaveValue('John123');
+
+    await page.getByLabel('Confirm password:').fill('John123');
+    await expect(page.getByLabel('Confirm password:')).toHaveValue('John123');
+  });
+
+  test('Login account', async ({ page }) => {
+    await page.fill('#Email', 'tuongtranhailong2804@gmail.com');
+    await page.fill('#Password', '01264425126')
+
+    await page.check('#RememberMe');
+    await expect(page.locator('#RememberMe')).toBeChecked();
+
+    await page.getByRole('button', { name: 'log in' }).click();
+    
+    await expect(page).toHaveURL('https://demowebshop.tricentis.com/')
+    await expect(page.getByText('Log out')).toBeVisible();
+  });
 
 });
