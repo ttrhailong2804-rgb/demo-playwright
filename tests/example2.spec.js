@@ -1,8 +1,7 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) =>{  
-  await page.goto('https://demowebshop.tricentis.com/');
-
-  await expect(page).toHaveTitle(/Demo Web Shop/);
-
+test('user can search docs', async ({ page }) => {
+  await page.goto('https://www.google.com/');           // 1) Mở trang
+  await page.getByRole('searchbox').fill('Viet Nam');
+  await expect(page.getByRole('searchbox')).toHaveValue('Viet Nam');
 });

@@ -45,6 +45,18 @@ test.describe('Header & Navigation', () => {
     await expect(page.getByRole('heading', {name: 'Wishlist', exact: true })).toBeVisible();
 
   });
+
+  test('Input box', async ({ page }) => {
+
+    await page.locator('input[name="q"]').fill('book');
+    await expect(page.locator('input[name="q"]')).toHaveValue('book');
+
+    await page.getByRole('button', { name: 'Search'}).click();
+    await expect(page).toHaveURL('https://demowebshop.tricentis.com/search?q=book');
+
+    //vì sao các locator dạng role/label/placeholder không nhận ra ô search????
+
+  });
   
   test.afterEach(async ({ page }) => {
 
