@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { execPath } from 'process';
 
 test.describe('Header & Navigation', () => {
 
@@ -61,8 +62,6 @@ test.describe('Header & Navigation', () => {
     await page.goto('https://demowebshop.tricentis.com/');
 
   });
-
-
 });
 
 test.describe('Login Function', () => {
@@ -75,21 +74,17 @@ test.describe('Login Function', () => {
     await page.getByRole('button', { name: 'Log in' }).click();
     await expect(page.getByText('Login was unsuccessful')).toBeVisible();
 
-    //await page.reload();
-
     await page.fill('#Email', '1234');
     await page.getByRole('button', {name: 'Log in'}).click();
     await expect(page.getByText('Please enter a valid email address.')).toBeVisible();
 
     await page.reload();
 
+     //Account does not exist
     await page.fill('#Email', '123@damn1.com');
     await page.fill('#Password', 'John123')
     await page.getByRole('button', { name: 'Log in' }).click();
     await expect(page.getByText('No customer account found')).toBeVisible();
-
-    //Account does not exist
-
   });
 
   test('Login features - Register no in4', async ({ page }) => {
@@ -149,5 +144,65 @@ test.describe('Login Function', () => {
     await expect(page).toHaveURL('https://demowebshop.tricentis.com/')
     await expect(page.getByText('Log out')).toBeVisible();
   });
+});
 
+test.describe('Category Listing (filter & sort)', () =>{
+  test.beforeEach(async ({ page }) => {
+    await page.goto('https://demowebshop.tricentis.com/');
+  });
+
+  test('Electronics navigation', async ({ page }) => {
+    await page.getByRole('link', { name: 'electronics'}).nth(0).click();
+    await expect(page).toHaveURL('https://demowebshop.tricentis.com/electronics');
+
+    await page.getByRole('link', { name: 'camera, photo'}).nth(0).click();
+    await expect(page).toHaveURL('https://demowebshop.tricentis.com/camera-photo');
+
+    await page.goBack();
+
+    await page.getByRole('link', { name: 'camera, photo'}).nth(1).click();
+    await expect(page).toHaveURL('https://demowebshop.tricentis.com/camera-photo');
+
+    await page.goBack();
+
+    await page.getByRole('link', { name: 'camera, photo'}).nth(2).click();
+    await expect(page).toHaveURL('https://demowebshop.tricentis.com/camera-photo');
+  })
+
+   test('Electronics function', async ({ page }) => {
+    await page.getByRole('link', { name: 'electronics'}).nth(0).click();
+    await expect(page).toHaveURL('https://demowebshop.tricentis.com/electronics');
+
+    await page.getByRole('link', { name: 'camera, photo'}).nth(0).click();
+    await expect(page).toHaveURL('https://demowebshop.tricentis.com/camera-photo');
+
+    await page.locator('#products-orderby').selectOption('Price: Low to High');
+    await expect(page).toHaveURL(/orderby=10/);
+    //await expect(page.locator('#products-orderby')).toHaveValue(/orderby=10/);
+
+    await page.locator('#products-pagesize').selectOption('12');
+    await expect(page).toHaveURL(/pagesize=12/);
+
+    await page.locator('#products-viewmode').selectOption('List');
+    await expect(page).toHaveURL(/viewmode=list/);
+  })
+
+  test('Product cart', async ({ page }) => {
+
+    await page.locator('a:has-text("14.1-inch Laptop")').locator('xpath=../..') .getByRole('button', { name: 'Add to cart' }).click();
+    
+    //const toast = page.locator('.bar-notification.success');
+    //await toast.waitFor({ state: 'visible', timeout: 10000 });
+    //await expect(toast).toContainText('The product has been added');
+    //toast.waitFor({ state: 'hidden' });
+
+    const successMsg = page.getByText('The product has been added to your shopping cart', { exact: false });
+    await expect(successMsg).toBeVisible({ timeout: 10000 });
+
+    //const qty = page.locator('#topcartlink .cart-qty');     
+    //await expect(qty).toHaveText('(1)', { timeout: 10000 }); 
+
+    await expect(page.locator('#topcartlink')).toContainText(/\(1\)/);
+
+  });
 });
