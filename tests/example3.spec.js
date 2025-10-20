@@ -71,6 +71,27 @@ test.describe('Login Function', () => {
     await page.goto('https://demowebshop.tricentis.com/login');
   });
 
+  test('Invalid login error', async ({ page }) => {
+    await page.getByRole('button', { name: 'Log in' }).click();
+    await expect(page.getByText('Login was unsuccessful')).toBeVisible();
+
+    //await page.reload();
+
+    await page.fill('#Email', '1234');
+    await page.getByRole('button', {name: 'Log in'}).click();
+    await expect(page.getByText('Please enter a valid email address.')).toBeVisible();
+
+    await page.reload();
+
+    await page.fill('#Email', '123@damn1.com');
+    await page.fill('#Password', 'John123')
+    await page.getByRole('button', { name: 'Log in' }).click();
+    await expect(page.getByText('No customer account found')).toBeVisible();
+
+    //Account does not exist
+
+  });
+
   test('Login features - Register no in4', async ({ page }) => {
     await page.getByRole('button', { name: 'Register' }).click();
     await expect(page).toHaveURL('https://demowebshop.tricentis.com/register')
@@ -82,6 +103,10 @@ test.describe('Login Function', () => {
     await expect(page.getByText('Password is required.').nth(0)).toBeVisible();  
     await expect(page.getByText('Password is required.').nth(1)).toBeVisible(); 
   });
+
+  //test('Existing user error', async ({ page }) =>{
+    
+  //});
 
   test('Login features - Register with in4', async ({ page }) => {
     await page.getByRole('button', { name: 'Register' }).click();
