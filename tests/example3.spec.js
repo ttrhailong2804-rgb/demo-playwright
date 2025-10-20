@@ -71,7 +71,19 @@ test.describe('Login Function', () => {
     await page.goto('https://demowebshop.tricentis.com/login');
   });
 
-  test('Login features', async ({ page }) => {
+  test('Login features - Register no in4', async ({ page }) => {
+    await page.getByRole('button', { name: 'Register' }).click();
+    await expect(page).toHaveURL('https://demowebshop.tricentis.com/register')
+
+    await page.getByRole('button', { name: 'Register' }).click();
+    await expect(page.getByText('First name is required.')).toBeVisible();
+    await expect(page.getByText('Last name is required.')).toBeVisible();
+    await expect(page.getByText('Email is required.')).toBeVisible();
+    await expect(page.getByText('Password is required.').nth(0)).toBeVisible();  
+    await expect(page.getByText('Password is required.').nth(1)).toBeVisible(); 
+  });
+
+  test('Login features - Register with in4', async ({ page }) => {
     await page.getByRole('button', { name: 'Register' }).click();
     await expect(page).toHaveURL('https://demowebshop.tricentis.com/register');
 
@@ -87,19 +99,22 @@ test.describe('Login Function', () => {
     await page.getByLabel('Last name:').fill('Wick');
     await expect(page.getByLabel('Last name:')).toHaveValue('Wick');
 
-    await page.getByLabel('Email:').fill('johnmfwick@damn.com');
-    await expect(page.getByLabel('Email:')).toHaveValue('johnmfwick@damn.com');
+    await page.getByLabel('Email:').fill('johnmfwick@damn1.com');
+    await expect(page.getByLabel('Email:')).toHaveValue('johnmfwick@damn1.com');
 
     await page.getByLabel('Password:', {exact: true}).fill('John123');
     await expect(page.getByLabel('Password:', {exact: true})).toHaveValue('John123');
 
     await page.getByLabel('Confirm password:').fill('John123');
     await expect(page.getByLabel('Confirm password:')).toHaveValue('John123');
+
+    //await page.getByRole('button', {name: 'Register'}).click();
+    //await expect(page.getByText('Your registration completed')).toBeVisible();
   });
 
   test('Login account', async ({ page }) => {
-    await page.fill('#Email', 'tuongtranhailong2804@gmail.com');
-    await page.fill('#Password', '01264425126')
+    await page.fill('#Email', 'johnmfwick@damn1.com');
+    await page.fill('#Password', 'John123')
 
     await page.check('#RememberMe');
     await expect(page.locator('#RememberMe')).toBeChecked();
