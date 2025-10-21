@@ -7,9 +7,36 @@ test.describe('ADD PRODUCT', () => {
     });
 
     test('Input box', async ({ page }) =>{
-        await page.locator('input.search-keyword').fill('Brocolli');
-        await expect(page.locator('input.search-keyword')).toHaveValue('Brocolli');
+        // await page.locator('input.search-keyword').fill('Brocolli');
+        // await expect(page.locator('input.search-keyword')).toHaveValue('Brocolli');
+        // await expect(page.locator('.product:has-text("Brocolli")')).toBeVisible();
+
+        await page.getByPlaceholder('Search for Vegetables and Fruits').fill('Brocolli');
+        await expect(page.getByPlaceholder('Search for Vegetables and Fruits')).toHaveValue('Brocolli');
         await expect(page.locator('.product:has-text("Brocolli")')).toBeVisible();
+
+        await page.reload();
+
+        await page.getByPlaceholder('Search for Vegetables and Fruits').fill('ghjgh');
+        await expect(page.getByText('Sorry, no products matched your search!')).toBeVisible();
+    });
+
+        test('Stepper-inputPlus', async ({ page }) => {
+        const qty = page.locator('.product:has-text("Brocolli") input.quantity');
+        const PlusBtn = page.locator('.product:has-text("Brocolli") .increment');
+        const MinusBtn = page.locator('.product:has-text("Brocolli") .decrement');
+
+        const before = await qty.inputValue();
+        await PlusBtn.click();
+        const after = await qty.inputValue();
+
+        expect(Number(after)).toBe(Number(before) + 1);
+
+        const before1 = await qty.inputValue();
+        await MinusBtn.click();
+        const after1 = await qty.inputValue();
+
+        expect(Number(after1)).toBe(Number(before1) - 1);
 
     });
 
@@ -39,15 +66,5 @@ test.describe('ADD PRODUCT', () => {
         await expect(rows).toHaveCount(3);
     });
 
-    test('Stepper-inputPlus', async ({ page }) => {
-        const qty = page.locator('.product:has-text("Brocolli") input.quantity');
-        const PlusBtn = page.locator('.product:has-text("Brocolli") .increment');
 
-        const before = await qty.inputValue();
-        await PlusBtn.click();
-        const after = await qty.inputValue();
-
-        expect(Number(after)).toBe(Number(before) + 1);
-
-    });
 });
