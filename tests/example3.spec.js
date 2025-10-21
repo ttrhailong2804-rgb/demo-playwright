@@ -196,8 +196,11 @@ test.describe('Category Listing (filter & sort)', () =>{
     //await expect(toast).toContainText('The product has been added');
     //toast.waitFor({ state: 'hidden' });
 
-    const successMsg = page.getByText('The product has been added to your shopping cart', { exact: false });
-    await expect(successMsg).toBeVisible({ timeout: 10000 });
+    // const successMsg = page.getByText('The product has been added to your shopping cart', { exact: false });
+    // await expect(successMsg).toBeVisible({ timeout: 10000 });
+
+    await expect(page.locator('a:has-text("14.1-inch Laptop")').locator('xpath=../..') .getByRole('button', { name: 'Add to cart' })).toContainText('has been added');
+
 
     //const qty = page.locator('#topcartlink .cart-qty');     
     //await expect(qty).toHaveText('(1)', { timeout: 10000 }); 
