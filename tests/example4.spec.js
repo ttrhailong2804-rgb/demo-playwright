@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test'
-import { after } from 'node:test';
 
 test.describe('ADD PRODUCT', () => {
     test.beforeEach(async ({ page }) =>{
@@ -37,7 +36,6 @@ test.describe('ADD PRODUCT', () => {
         const after1 = await qty.inputValue();
 
         expect(Number(after1)).toBe(Number(before1) - 1);
-
     });
 
     test('Product add to cart', async ({ page }) =>{
@@ -72,15 +70,15 @@ test.describe('ADD PRODUCT', () => {
         await page.locator('select').selectOption('Angola');
         // await page.getByRole('combobox').selectOption('Angola')
         // await page.getByLabel('Choose Country').selectOption('Angola');
-        await expect(page.locator('select')).toHaveValue('Angola');        
+        await expect(page.locator('select')).toHaveValue('Angola'); 
+        
+        await page.getByRole('button', { name: 'Proceed' }).click();
+        await expect(page.getByText('Please accept Terms & Conditions - Required')).toBeVisible();
 
         await page.locator('input.chkAgree').check();
         await expect(page.locator('input.chkAgree')).toBeChecked();
 
         await page.getByRole('button', { name: 'Proceed' }).click();
         await expect(page.getByText('Thank you, your order has been placed successfully')).toBeVisible();
-
     });
-
-
 });

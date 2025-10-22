@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import { execPath } from 'process';
 
 test.describe('Header & Navigation', () => {
 
