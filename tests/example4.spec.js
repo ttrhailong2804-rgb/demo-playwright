@@ -43,6 +43,7 @@ test.describe('ADD PRODUCT', () => {
     test('Product add to cart', async ({ page }) =>{
         await page.locator('.product:has-text("Brocolli") button').click();
         await expect(page.locator('.product:has-text("Brocolli") button')).toContainText('ADDED');
+        
         const before = await page.locator('.cart-count').innerText();   
 
         await page.locator('.product:has-text("Cauliflower") button').click();
@@ -64,6 +65,21 @@ test.describe('ADD PRODUCT', () => {
 
         const rows = page.locator('#productCartTables tbody tr');
         await expect(rows).toHaveCount(3);
+
+        await page.getByRole('button', {name: 'Place Order'}).click();
+        await expect(page).toHaveURL('https://rahulshettyacademy.com/seleniumPractise/#/country');
+
+        await page.locator('select').selectOption('Angola');
+        // await page.getByRole('combobox').selectOption('Angola')
+        // await page.getByLabel('Choose Country').selectOption('Angola');
+        await expect(page.locator('select')).toHaveValue('Angola');        
+
+        await page.locator('input.chkAgree').check();
+        await expect(page.locator('input.chkAgree')).toBeChecked();
+
+        await page.getByRole('button', { name: 'Proceed' }).click();
+        await expect(page.getByText('Thank you, your order has been placed successfully')).toBeVisible();
+
     });
 
 
