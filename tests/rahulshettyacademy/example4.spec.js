@@ -1,6 +1,4 @@
 import { test, expect } from '@playwright/test'
-import { productQtyData } from './shoppingList.data';
-import { ProductListPage, CartPreview, CartPage, CheckoutPage } from './ProductListPage';
 
 test.describe('ADD PRODUCT', () => {
     test.beforeEach(async ({ page }) =>{
