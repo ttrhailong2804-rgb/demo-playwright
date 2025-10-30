@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Brocolli - 1 Kg",
+    "price": "120",
+    "image": "./images/broccoli.jpg"
+  },
+  {
+    "name": "Cauliflower - 1 Kg",
+    "price": "60",
+    "image": "./images/cauliflower.jpg"
+  },
+  {
+    "name": "Cucumber - 1 Kg",
+    "price": "48",
+    "image": "./images/cucumber.jpg"
+  },
+  {
+    "name": "Beetroot - 1 Kg",
+    "price": "32",
+    "image": "./images/beetroot.jpg"
+  },
+  {
+    "name": "Carrot - 1 Kg",
+    "price": "56",
+    "image": "./images/carrots.jpg"
+  },
+  {
+    "name": "Tomato - 1 Kg",
+    "price": "16",
+    "image": "./images/tomato.jpg"
+  },
+  {
+    "name": "Beans - 1 Kg",
+    "price": "82",
+    "image": "./images/beans.jpg"
+  },
+  {
+    "name": "Brinjal - 1 Kg",
+    "price": "35",
+    "image": "./images/brinjal.jpg"
+  },
+  {
+    "name": "Capsicum",
+    "price": "60",
+    "image": "./images/capsicum.jpg"
+  },
+  {
+    "name": "Mushroom - 1 Kg",
+    "price": "75",
+    "image": "./images/button-mushroom.jpg"
+  },
+  {
+    "name": "Potato - 1 Kg",
+    "price": "22",
+    "image": "./images/potato.jpg"
+  },
+  {
+    "name": "Pumpkin - 1 Kg",
+    "price": "48",
+    "image": "./images/pumpkin.jpg"
+  },
+  {
+    "name": "Corn - 1 Kg",
+    "price": "75",
+    "image": "./images/corn.jpg"
+  },
+  {
+    "name": "Onion - 1 Kg",
+    "price": "16",
+    "image": "./images/onion.jpg"
+  },
+  {
+    "name": "Apple - 1 Kg",
+    "price": "72",
+    "image": "./images/apple.jpg"
+  },
+  {
+    "name": "Banana - 1 Kg",
+    "price": "45",
+    "image": "./images/banana.jpg"
+  },
+  {
+    "name": "Grapes - 1 Kg",
+    "price": "60",
+    "image": "./images/grapes.jpg"
+  },
+  {
+    "name": "Mango - 1 Kg",
+    "price": "75",
+    "image": "./images/mango.jpg"
+  },
+  {
+    "name": "Musk Melon - 1 Kg",
+    "price": "36",
+    "image": "./images/musk-melon.jpg"
+  },
+  {
+    "name": "Orange - 1 Kg",
+    "price": "75",
+    "image": "./images/orange.jpg"
+  },
+  {
+    "name": "Pears - 1 Kg",
+    "price": "69",
+    "image": "./images/pears.jpg"
+  },
+  {
+    "name": "Pomegranate - 1 Kg",
+    "price": "95",
+    "image": "./images/pomegranate.jpg"
+  },
+  {
+    "name": "Raspberry - 1/4 Kg",
+    "price": "160",
+    "image": "./images/raspberry.jpg"
+  },
+  {
+    "name": "Strawberry - 1/4 Kg",
+    "price": "180",
+    "image": "./images/strawberry.jpg"
+  },
+  {
+    "name": "Water Melon - 1 Kg",
+    "price": "28",
+    "image": "./images/water-melon.jpg"
+  },
+  {
+    "name": "Almonds - 1/4 Kg",
+    "price": "200",
+    "image": "./images/almonds.jpg"
+  },
+  {
+    "name": "Pista - 1/4 Kg",
+    "price": "190",
+    "image": "./images/pista.jpg"
+  },
+  {
+    "name": "Nuts Mixture - 1 Kg",
+    "price": "950",
+    "image": "./images/nuts-mixture.jpg"
+  },
+  {
+    "name": "Cashews - 1 Kg",
+    "price": "650",
+    "image": "./images/cashews.jpg"
+  },
+  {
+    "name": "Walnuts - 1/4 Kg",
+    "price": "170",
+    "image": "./images/walnuts.jpg"
+  },
+  {
+    "name": "",
+    "price": "0",
+    "image": ""
+  }
+]

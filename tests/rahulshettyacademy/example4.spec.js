@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test'
+import { productQtyData } from './shoppingList.data';
+import { ProductListPage, CartPreview, CartPage, CheckoutPage } from './ProductListPage';
 
 test.describe('ADD PRODUCT', () => {
     test.beforeEach(async ({ page }) =>{
@@ -8,7 +10,6 @@ test.describe('ADD PRODUCT', () => {
     test('Input box', async ({ page }) =>{
         // await page.locator('input.search-keyword').fill('Brocolli');
         // await expect(page.locator('input.search-keyword')).toHaveValue('Brocolli');
-        // await expect(page.locator('.product:has-text("Brocolli")')).toBeVisible();
 
         await page.getByPlaceholder('Search for Vegetables and Fruits').fill('Brocolli');
         await expect(page.getByPlaceholder('Search for Vegetables and Fruits')).toHaveValue('Brocolli');

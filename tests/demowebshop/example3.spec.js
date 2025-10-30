@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from './LoginPage';
+import { loginData } from './Login.data';
 
 test.describe('Header & Navigation', () => {
 
@@ -32,7 +34,7 @@ test.describe('Header & Navigation', () => {
 
   test('Navigation to Shopping Cart', async ({ page }) => {
 
-    await page.getByRole('link', { name: /Shopping cart/ }).nth(0).click();
+    await page.getByRole('link', { name: /Shopping cart/i }).nth(0).click();
     await expect(page).toHaveURL('https://demowebshop.tricentis.com/cart');
     await expect(page.getByRole('heading', { name: 'Shopping cart', exact: true })).toBeVisible();
 
@@ -63,27 +65,41 @@ test.describe('Header & Navigation', () => {
   });
 });
 
-test.describe('Login Function', () => {
+test.describe('Login Functions', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto('https://demowebshop.tricentis.com/login');
+  })
+
+  test('Invalid login error – empty fields', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.loginAs('','');
+    await loginPage.expectEmptyfields();  
   });
 
-  test('Invalid login error', async ({ page }) => {
-    await page.getByRole('button', { name: 'Log in' }).click();
-    await expect(page.getByText('Login was unsuccessful')).toBeVisible();
+   test('Invalid login error – invalid email format', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.loginAs('123','');
+    await loginPage.InvalidEmailFormat();  
+  });
 
-    await page.fill('#Email', '1234');
-    await page.getByRole('button', {name: 'Log in'}).click();
-    await expect(page.getByText('Please enter a valid email address.')).toBeVisible();
+   test('Invalid login error – non-existent account', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.loginAs('123@damn1.com','John123');
+    await loginPage.expectNonExistentAccount();
+  });
 
-    await page.reload();
+  test('Login Success', async ({ page }) => {
+    const loginPage = new LoginPage(page);               
+    await loginPage.loginAs(loginData.validUser.email, loginData.validUser.password); 
+    await loginPage.expectSuccess();        
+  }); 
+}) 
 
-     //Account does not exist
-    await page.fill('#Email', '123@damn1.com');
-    await page.fill('#Password', 'John123')
-    await page.getByRole('button', { name: 'Log in' }).click();
-    await expect(page.getByText('No customer account found')).toBeVisible();
+test.describe('Register Function', () => {
+
+  test.beforeEach(async ({ page }) => {
+    await page.goto('https://demowebshop.tricentis.com/login');
   });
 
   test('Login features - Register no in4', async ({ page }) => {
@@ -129,19 +145,6 @@ test.describe('Login Function', () => {
 
     //await page.getByRole('button', {name: 'Register'}).click();
     //await expect(page.getByText('Your registration completed')).toBeVisible();
-  });
-
-  test('Login account', async ({ page }) => {
-    await page.fill('#Email', 'johnmfwick@damn1.com');
-    await page.fill('#Password', 'John123')
-
-    await page.check('#RememberMe');
-    await expect(page.locator('#RememberMe')).toBeChecked();
-
-    await page.getByRole('button', { name: 'log in' }).click();
-    
-    await expect(page).toHaveURL('https://demowebshop.tricentis.com/')
-    await expect(page.getByText('Log out')).toBeVisible();
   });
 });
 
